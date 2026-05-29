@@ -83,6 +83,11 @@ cat_cols = ['race', 'admission_type_id', 'discharge_disposition_id',
 # one-hot encode these cols/categories; variables in categories get their own binary col in the df
 df = pd.get_dummies(df, columns=cat_cols, drop_first=True)
 
+# create binary vals for my target feature
+df['readmitted_binary'] = (df['readmitted'] == '<30').astype(int)
+df = df.drop(columns=['readmitted'])
+
+
 # check the final dataset
 print(f"\nFinal shape: {df.shape}")
 print(f"Missing values: {df.isnull().sum().sum()}")
