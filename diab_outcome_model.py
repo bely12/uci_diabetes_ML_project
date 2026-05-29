@@ -8,6 +8,7 @@ from sklearn.metrics import (roc_auc_score,
                              classification_report, 
                              RocCurveDisplay, 
                              confusion_matrix)
+from xgboost import XGBClassifier
 import matplotlib.pyplot as plt
 
 df = pd.read_csv("diabetes_cleaned.csv")
@@ -37,15 +38,29 @@ rf_auc = roc_auc_score(y_test, rf_probs)
 print(f"\nRandom Forest AUC: {rf_auc:.4f}")
 print(classification_report(y_test, rf.predict(X_test)))
 
+# XGBoost classifier
+xgb = XGBClassifier(random_state = 42,
+                    scale_pos_weight = 8,
+                    n_jobs = -1,
+                    eval_metric = 'auc')
+xgb.fit(X_train, y_train)
+xgb_probs = xgb.predict_proba(X_test)[:, 1]
+xgb_auc = roc_auc_score(y_test, xgb_probs)
+print(f"\nXGBoost AUC: {xgb_auc:.4f}")
+print(classification_report(y_test, xgb.predict(X_test)))
+
 # ROC curve
 fig, ax = plt.subplots(figsize=(7, 6))
+
 RocCurveDisplay.from_predictions(y_test, lr_probs, name=f"Logistic Regression (AUC={lr_auc:.3f})", ax=ax)
 RocCurveDisplay.from_predictions(y_test, rf_probs, name=f"Random Forest (AUC={rf_auc:.3f})", ax=ax)
+RocCurveDisplay.from_predictions(y_test, xgb_probs, name=f"XGBoost (AUC={xgb_auc:.3f})", ax=ax)
+
 ax.plot([0, 1], [0, 1], "k--", label="Random (AUC=0.500)")
 ax.set_title("Diabetes 30-Day Readmission Classifier")
 ax.set_xlabel("False Positive Rate")
 ax.set_ylabel("True Positive Rate")
 ax.legend()
 plt.tight_layout()
-plt.savefig("roc_curve_diab_uci_LogReg_RF.png", dpi=150)
+plt.savefig("roc_curve_diab_uci_LogReg_RF_XGB.png", dpi=150)
 #plt.show()
