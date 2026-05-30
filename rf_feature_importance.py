@@ -13,7 +13,7 @@ df = pd.read_csv("diabetes_cleaned.csv")
 # split features and target
 X = df.drop(columns=['readmitted_binary', 'any_readmission_binary'])
 #y = df['readmitted_binary']
-y = df['any_readmissoin_binary'] # alternative target to try, commment out one of the y's
+y = df['any_readmission_binary'] # alternative target to try, commment out one of the y's
 
 
 # train and test
