@@ -85,7 +85,11 @@ df = pd.get_dummies(df, columns=cat_cols, drop_first=True)
 
 # create binary vals for my target feature
 df['readmitted_binary'] = (df['readmitted'] == '<30').astype(int)
+df['any_readmission_binary'] = (df['readmitted'] == 'NO').astype(int)
 df = df.drop(columns=['readmitted'])
+
+# combine visits for a total number of hospital visits
+df['total_previous_visits'] = df(['number_outpatient'] + df['number_inpatient'] + df['number_emergency'])
 
 
 # check the final dataset
