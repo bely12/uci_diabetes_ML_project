@@ -14,8 +14,10 @@ import matplotlib.pyplot as plt
 df = pd.read_csv("diabetes_cleaned.csv")
 
 # split features and target
-X = df.drop(columns=['readmitted_binary'])
-y = df['readmitted_binary']
+X = df.drop(columns=['readmitted_binary', 'any_readmission_binary'])
+#y = df['readmitted_binary']
+y = df['any_readmissoin_binary'] # alternative target to try, commment out one of the y's
+
 
 # train and test
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
