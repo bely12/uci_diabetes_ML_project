@@ -20,7 +20,10 @@ y = df['any_readmission_binary'] # alternative target to try, commment out one o
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
 
 # random forest
-rf = RandomForestClassifier(n_estimators=200, random_state=42, class_weight='balanced', n_jobs=-1)
+rf = RandomForestClassifier(n_estimators=200, 
+                            random_state=42, 
+                            #class_weight='balanced', # only use with original unbalnaced target outcome
+                              n_jobs=-1)
 rf.fit(X_train, y_train)
 
 # extract feature importance from random forest

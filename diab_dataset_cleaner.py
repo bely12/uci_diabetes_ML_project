@@ -88,9 +88,8 @@ df['readmitted_binary'] = (df['readmitted'] == '<30').astype(int)
 df['any_readmission_binary'] = (df['readmitted'] == 'NO').astype(int)
 df = df.drop(columns=['readmitted'])
 
-# combine visits for a total number of hospital visits
-df['total_previous_visits'] = (df['number_outpatient'] + df['number_inpatient'] + df['number_emergency'])
-
+# combine visits for a total number of hospital visits; not going to use since separate cols give more info 
+#df['total_previous_visits'] = (df['number_outpatient'] + df['number_inpatient'] + df['number_emergency'])
 
 # check the final dataset
 print(f"\nFinal shape: {df.shape}")
