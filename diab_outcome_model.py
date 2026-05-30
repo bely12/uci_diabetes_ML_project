@@ -56,12 +56,12 @@ print(classification_report(y_test, xgb.predict(X_test)))
 # ROC curve
 fig, ax = plt.subplots(figsize=(7, 6))
 
-RocCurveDisplay.from_predictions(y_test, lr_probs, name=f"Logistic Regression (AUC={lr_auc:.3f})", ax=ax)
-RocCurveDisplay.from_predictions(y_test, rf_probs, name=f"Random Forest (AUC={rf_auc:.3f})", ax=ax)
-RocCurveDisplay.from_predictions(y_test, xgb_probs, name=f"XGBoost (AUC={xgb_auc:.3f})", ax=ax)
+RocCurveDisplay.from_predictions(y_test, lr_probs, name="Logistic Regression", ax=ax)
+RocCurveDisplay.from_predictions(y_test, rf_probs, name="Random Forest", ax=ax)
+RocCurveDisplay.from_predictions(y_test, xgb_probs, name="XGBoost", ax=ax)
 
 ax.plot([0, 1], [0, 1], "k--", label="Random (AUC=0.500)")
-ax.set_title("Diabetes 30-Day Readmission Classifier")
+ax.set_title("Diabetes Hospital Readmission Risk Classifier")
 ax.set_xlabel("False Positive Rate")
 ax.set_ylabel("True Positive Rate")
 ax.legend()
